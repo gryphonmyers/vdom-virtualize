@@ -27,12 +27,12 @@ var VNode = require("virtual-dom/vnode/vnode")
 
 module.exports = createVNode
 
-function createVNode(domNode, key) {
-  key = key || null // XXX: Leave out `key` for now... merely used for (re-)ordering
+function createVNode(domNode, keyAttribute) {
+  keyAttribute = keyAttribute || null // XXX: Leave out `key` for now... merely used for (re-)ordering
 
-  if(domNode.nodeType == 1) return createFromElement(domNode, key)
-  if(domNode.nodeType == 3) return createFromTextNode(domNode, key)
-  if(domNode.nodeType == 8) return createFromCommentNode(domNode, key)
+  if(domNode.nodeType == 1) return createFromElement(domNode, keyAttribute)
+  if(domNode.nodeType == 3) return createFromTextNode(domNode, keyAttribute)
+  if(domNode.nodeType == 8) return createFromCommentNode(domNode, keyAttribute)
   return
 }
 
@@ -46,17 +46,18 @@ function createFromCommentNode(cNode) {
 }
 
 
-function createFromElement(el) {
+function createFromElement(el, keyAttribute) {
   var tagName = el.tagName
   , namespace = el.namespaceURI == 'http://www.w3.org/1999/xhtml'? null : el.namespaceURI
   , properties = getElementProperties(el)
   , children = []
+  , key = (keyAttribute && el.getAttribute(keyAttribute)) || null
 
   for (var i = 0; i < el.childNodes.length; i++) {
-    children.push(createVNode(el.childNodes[i]/*, i*/))
+    children.push(createVNode(el.childNodes[i], keyAttribute))
   }
 
-  return new VNode(tagName, properties, children, null, namespace)
+  return new VNode(tagName, properties, children, key, namespace)
 }
 
 
