@@ -65,7 +65,7 @@ function getElementProperties(el) {
 
   for(var i=0; i<props.length; i++) {
     var propName = props[i]
-    if(!el[propName]) continue
+    if(!el[propName] || (elementReadOnlyProperties[tagName] && elementReadOnlyProperties[tagName].indexOf(propName) > -1)) continue
 
     // Special case: style
     // .style is a DOMStyleDeclaration, thus we need to iterate over all
@@ -149,6 +149,12 @@ function getElementProperties(el) {
 
   return obj
 }
+
+var elementReadOnlyProperties = {
+  'select': [
+    'type'
+  ]
+};
 
 /**
  * DOMNode property white list
