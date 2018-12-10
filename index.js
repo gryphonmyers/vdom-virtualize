@@ -65,7 +65,7 @@ function getElementProperties(tagName, el) {
 
   for(var i=0; i<props.length; i++) {
     var propName = props[i]
-    if(!el[propName] || (elementReadOnlyProperties[tagName] && elementReadOnlyProperties[tagName.toLowerCase()].indexOf(propName) > -1)) continue
+    if(!el[propName] || (elementReadOnlyProperties[tagName.toLowerCase()] && elementReadOnlyProperties[tagName.toLowerCase()].indexOf(propName) > -1)) continue
 
     // Special case: style
     // .style is a DOMStyleDeclaration, thus we need to iterate over all
