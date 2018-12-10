@@ -49,7 +49,7 @@ function createFromCommentNode(cNode) {
 function createFromElement(el) {
   var tagName = el.tagName
   , namespace = el.namespaceURI == 'http://www.w3.org/1999/xhtml'? null : el.namespaceURI
-  , properties = getElementProperties(el)
+  , properties = getElementProperties(tagName, el)
   , children = []
 
   for (var i = 0; i < el.childNodes.length; i++) {
@@ -60,12 +60,12 @@ function createFromElement(el) {
 }
 
 
-function getElementProperties(el) {
+function getElementProperties(tagName, el) {
   var obj = {}
 
   for(var i=0; i<props.length; i++) {
     var propName = props[i]
-    if(!el[propName] || (elementReadOnlyProperties[tagName] && elementReadOnlyProperties[tagName].indexOf(propName) > -1)) continue
+    if(!el[propName] || (elementReadOnlyProperties[tagName] && elementReadOnlyProperties[tagName.toLowerCase()].indexOf(propName) > -1)) continue
 
     // Special case: style
     // .style is a DOMStyleDeclaration, thus we need to iterate over all
