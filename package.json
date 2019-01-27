@@ -1,6 +1,6 @@
 {
   "name": "@weddell/vdom-virtualize",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Virtualize any DOM node and turn it into a virtual-dom node.",
   "main": "index.js",
   "dependencies": {},
